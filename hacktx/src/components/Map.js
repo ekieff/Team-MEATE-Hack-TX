@@ -33,10 +33,11 @@ const getMarkers = async () => {
   }
 
   let data;
+  
   pantries.forEach((doc) => {
     data = doc.data();
     console.log(data)
-    console.log(data.lat, data.lng, data.name);
+    console.log(data.id, data.lat, data.lng, data.name);
     if (data.lat && data.lng && data.name)
       markers.push(
         <Marker lat={data.lat} lng={data.lng} text={data.name.name} />
