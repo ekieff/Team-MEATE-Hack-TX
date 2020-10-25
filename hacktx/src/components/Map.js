@@ -7,9 +7,10 @@ import { db } from "../firebase";
 const Marker = ({ text }) => <div>{text}</div>;
 
 //A pantry as it appears in the list. This should ideally be limited to nearby pantries
-const Pantry = ({ name, info, inventory }) => {
+const Pantry = ({ pkid, name, info, inventory }) => {
   return (
     <div>
+      <h4>{pkid}</h4>
       <h2>{name}</h2>
       <h3>{info}</h3>
       <p>Inventory:</p>
@@ -34,6 +35,7 @@ const getMarkers = async () => {
   let data;
   pantries.forEach((doc) => {
     data = doc.data();
+    console.log(data)
     console.log(data.lat, data.lng, data.name);
     if (data.lat && data.lng && data.name)
       markers.push(
@@ -43,6 +45,7 @@ const getMarkers = async () => {
     if (data.name && data.info && data.inventory)
       pdata.push(
         <Pantry
+          id={data.id}
           name={data.name.name}
           info={data.info.info}
           inventory={data.inventory}

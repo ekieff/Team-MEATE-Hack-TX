@@ -1,10 +1,22 @@
 
 import React, { useEffect, useState, setState } from "react"
 import { db } from "../firebase";
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/core/styles';
 
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    '& .MuiTextField-root': {
+      margin: theme.spacing(1),
+      width: '25ch',
+    },
+  },
+}));
 
 function AddPantry(props){
+  const classes = useStyles();
   
   const dbsettest = async () => {
     await db
@@ -27,9 +39,9 @@ function AddPantry(props){
     console.log(doc.data());
   };
 
-  const [name, setName] = useState('name')
-  const [lat, setLat] = useState(0)
-  const [long, setLong] = useState(0)
+  const [name, setName] = useState('name of your pantry')
+  const [lat, setLat] = useState('Your Latitude')
+  const [long, setLong] = useState('Your Longitude')
   const [info, setInfo] = useState('some info about your pantry')
 
   const onChangeName = (event) =>{
@@ -55,31 +67,25 @@ function AddPantry(props){
 
   return (
     <div>
-      <h1>Form Goes Here</h1>
-      <form>
-        <h1>Add your little pantry!</h1>
+      <form className={classes.root} noValidate autoComplete="off">
+        <h1>Add a food pantry to our list</h1>
           <div>
-            <label htmlFor="name">Name of your pantry</label>
-            <input type="text" name="name" placeholder={name} onChange={onChangeName}/>
+            <TextField required id="standard-required" label={name} name="name" placeholder={name} onChange={onChangeName}/>
           </div>
           <div>
-            <label htmlFor="lat">Latitude of your pantry</label>
-            <input type="text" name="lat" placeholder={lat} onChange={onChangeLat}/>
+            <TextField required id="standard-required" label={lat} name="lat" placeholder={lat} onChange={onChangeLat}/>
           </div>
           <div>
-            <label htmlFor="long">Longitude of your pantry</label>
-            <input type="text" name="long" placeholder={long} onChange={onChangeLong}/>
+            <TextField required id="standard-required" label={long} name="long" placeholder={long} onChange={onChangeLong}/>
           </div>
           <div>
-            <label htmlFor="info">Some info about your pantry</label>
-            <input type="text" name="info" placeholder={info} onChange={onChangeInfo}/>
+            <TextField required id="standard-required" label={info} name="info" placeholder={info} onChange={onChangeInfo}/>
           </div>
       </form>
-      <p>maybe select location on map?</p>
       {/* add to above form */}
-      <button onClick={dbsettest}>save to db</button>
+      <Button variant="contained" color="primary" onClick={dbsettest}>Add a pantry</Button>
       {/* add to homepage and pantry id */}
-      <button onClick={() => dbgettest()}>retrieve from db</button>
+      {/* <button onClick={() => dbgettest()}>retrieve from db</button> */}
     </div>
   );
 };
