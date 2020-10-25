@@ -1,5 +1,4 @@
 import firebase from "firebase";
-import env from "react-dotenv";
 
 const firebaseApp = firebase.initializeApp({
   apiKey: process.env.REACT_APP_APIKEY,

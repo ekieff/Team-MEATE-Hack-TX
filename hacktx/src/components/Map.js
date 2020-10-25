@@ -1,16 +1,20 @@
 import React, { useState, useRef, useEffect } from "react";
+import { Link } from "react-router-dom";
 import GoogleMapReact from "google-map-react";
 import { db } from "../firebase";
+require("dotenv").config();
 
 //A pantry as it appears on the map. Should probably be an icon+text? Hover functionality would
 //be even better but idk we can pull that off
 const Marker = ({ text }) => <div>{text}</div>;
 
 //A pantry as it appears in the list. This should ideally be limited to nearby pantries
-const Pantry = ({ name, info, inventory }) => {
+const Pantry = ({ id, name, info, inventory }) => {
   return (
     <div>
-      <h2>{name}</h2>
+      <Link to={`/pantry/${id}`}>
+        <h2>{name}</h2>
+      </Link>
       <h3>{info}</h3>
       <p>Inventory:</p>
       {Object.keys(inventory).map((key) => {
@@ -34,17 +38,15 @@ const getMarkers = async () => {
   let data;
   pantries.forEach((doc) => {
     data = doc.data();
-    console.log(data.lat, data.lng, data.name);
     if (data.lat && data.lng && data.name)
-      markers.push(
-        <Marker lat={data.lat} lng={data.lng} text={data.name.name} />
-      );
+      markers.push(<Marker lat={data.lat} lng={data.lng} text={data.name} />);
 
     if (data.name && data.info && data.inventory)
       pdata.push(
         <Pantry
-          name={data.name.name}
-          info={data.info.info}
+          id={doc.id}
+          name={data.name}
+          info={data.info}
           inventory={data.inventory}
         />
       );
