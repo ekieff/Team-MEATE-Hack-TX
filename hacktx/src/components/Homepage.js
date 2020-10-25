@@ -9,7 +9,7 @@ function Homepage(props) {
       <h1>This is the homepage</h1>
       <SimpleMap center={{ lat: 30.23532, lng: -97.72787 }} />
     </div>
-  )
+  );
 }
 
 export default Homepage;
