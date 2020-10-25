@@ -37,17 +37,11 @@ const getMarkers = async () => {
     data = doc.data();
     console.log(data.lat, data.lng, data.name);
     if (data.lat && data.lng && data.name)
-      markers.push(
-        <Marker lat={data.lat} lng={data.lng} text={data.name.name} />
-      );
+      markers.push(<Marker lat={data.lat} lng={data.lng} text={data.name} />);
 
     if (data.name && data.info && data.inventory)
       pdata.push(
-        <Pantry
-          name={data.name.name}
-          info={data.info.info}
-          inventory={data.inventory}
-        />
+        <Pantry name={data.name} info={data.info} inventory={data.inventory} />
       );
   });
   return [pdata, markers];
