@@ -1,7 +1,22 @@
-import React, { useEffect, useState, setState } from "react";
+import React, { useEffect, useState, setState } from "react"
 import { db } from "../firebase";
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    '& .MuiTextField-root': {
+      margin: theme.spacing(1),
+      width: '25ch',
+    },
+  },
+}));
 
 const AddPantry = (props) => {
+
+  const classes = useStyles();
+
   const dbsettest = async () => {
     await db.collection("pantries").add({
       name: name,
@@ -13,17 +28,11 @@ const AddPantry = (props) => {
     console.log("saved");
   };
 
-  const dbgettest = async () => {
-    const doc = await db.collection("pantries").get();
-    doc.forEach((d) => {
-      console.log(d);
-    });
-  };
 
-  const [name, setName] = useState("name");
-  const [lat, setLat] = useState(0);
-  const [long, setLong] = useState(0);
-  const [info, setInfo] = useState("some info about your pantry");
+  const [name, setName] = useState('name of your pantry')
+  const [lat, setLat] = useState(0)
+  const [long, setLong] = useState(0)
+  const [info, setInfo] = useState('some info about your pantry')
   const [inventory, setInventory] = useState({});
   const [item, setItem] = useState("Sliced Bread");
   const [itemno, setItemNo] = useState(0);
@@ -70,64 +79,30 @@ const AddPantry = (props) => {
   return (
     <div>
       <h1>Add your little pantry!</h1>
+      <form className={classes.root} noValidate autoComplete="off">
+        <h1>Add a food pantry to our list</h1>
+          <div>
+            <TextField required id="standard-required" label="name of your food pantry" name="name" placeholder="name" onChange={onChangeName}/>
+          </div>
+          <div>
+            <TextField required id="standard-required" label="latitude of your food pantry" name="lat" placeholder="Latitude" onChange={onChangeLat}/>
+          </div>
+          <div>
+            <TextField required id="standard-required" label="longitude of your food pantry" name="long" placeholder="Longitude" onChange={onChangeLong}/>
+          </div>
+          <div>
+            <TextField required id="standard-required" label="some info about your food pantry" name="info" placeholder="info" onChange={onChangeInfo}/>
+          </div>
+      </form>
       <div>
-        <label htmlFor="name">Name of your pantry</label>
-        <input
-          type="text"
-          name="name"
-          placeholder={name}
-          onChange={onChangeName}
-        />
+        <h4>Add a product to your food pantry</h4>
+      <TextField required id="standard-required" label="Product" name="info" placeholder="product" onChange={onChangeItem}/>
+      <TextField required id="standard-required" label="Quantity:" name="itemNo" placeholder="quantity" onChange={onChangeItemNo}/>
       </div>
       <div>
-        <label htmlFor="lat">Latitude of your pantry</label>
-        <input
-          type="text"
-          name="lat"
-          placeholder={lat}
-          onChange={onChangeLat}
-        />
+      <Button variant="contained" color="primary" onClick={dbsettest}>Add a pantry</Button>
+      <Button variant="contained" color="primary" onClick={dbsettest}>Add Food to Pantry</Button>
       </div>
-      <div>
-        <label htmlFor="long">Longitude of your pantry</label>
-        <input
-          type="text"
-          name="long"
-          placeholder={long}
-          onChange={onChangeLong}
-        />
-      </div>
-      <div>
-        <label htmlFor="info">Some info about your pantry</label>
-        <input
-          type="text"
-          name="info"
-          placeholder={info}
-          onChange={onChangeInfo}
-        />
-      </div>
-      <div>
-        <label htmlFor="item">Add something to your inventory!</label>
-        <input
-          type="text"
-          name="item"
-          placeholder={item}
-          onChange={onChangeItem}
-        />
-        <label htmlFor="itemno">Amount:</label>
-        <input
-          type="text"
-          name="itemNo"
-          placeholder={itemno}
-          onChange={onChangeItemNo}
-        />
-      </div>
-      <button onClick={addItem}>Add item</button>
-      <div></div>
-      {/* add to above form */}
-      <button onClick={dbsettest}>save to db</button>
-      {/* add to homepage and pantry id */}
-      <button onClick={() => dbgettest()}>retrieve from db</button>
     </div>
   );
 };

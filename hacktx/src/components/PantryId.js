@@ -1,7 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { db } from "../firebase";
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    '& .MuiTextField-root': {
+      margin: theme.spacing(1),
+      width: '25ch',
+    },
+  },
+}));
 
 const PantryId = (props) => {
+
+  const classes = useStyles();
+
   const [loaded, setLoaded] = useState(0);
   const [pantry, setPantry] = useState({});
   const [item, setItem] = useState("Sliced Bread");
@@ -20,6 +35,7 @@ const PantryId = (props) => {
     }
     fetchData();
   }, []);
+
 
   const takeItem = (key) => {
     let p = pantry;
@@ -59,35 +75,24 @@ const PantryId = (props) => {
             return (
               <div label={key}>
                 <p>{key + ":" + pantry.inventory[key]}</p>
-                <button
+                <Button variant="contained" color="primary"
                   onClick={() => {
                     takeItem(key);
                   }}
                 >
                   Take item
-                </button>
+                </Button>
               </div>
             );
           })}
         </div>
         <div>
-          <label htmlFor="Add item:">Item:</label>
-          <input
-            type="text"
-            name="invitem"
-            placeholder={item}
-            onChange={onChangeItem}
-          />
-          <label htmlFor="itemno">Amount:</label>
-          <input
-            type="text"
-            name="itemNo"
-            placeholder={itemno}
-            onChange={onChangeItemNo}
-          />
-        </div>
-        <button onClick={() => addItem()}>Add item</button>
-        <button onClick={save}>Save!</button>
+        <h4>Add a product to your food pantry</h4>
+      <TextField required id="standard-required" label="Product" name="info" placeholder="product" onChange={onChangeItem}/>
+      <TextField required id="standard-required" label="Quantity:" name="itemNo" placeholder="quantity" onChange={onChangeItemNo}/>
+      </div>
+        <Button variant="contained" color="primary" onClick={() => addItem()}>Add item</Button>
+        <Button variant="contained" color="primary"onClick={save}>Save!</Button>
       </div>
     );
   } else return <div>loading</div>;

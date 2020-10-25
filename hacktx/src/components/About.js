@@ -7,7 +7,11 @@ function About(){
     return(
         
             <div>
-                <h1>Our about page</h1>
+                <h1>About Us</h1>
+                    <h3>
+                        Project Harvest is a web based application born of a need to connect to food services in a growing online platform. 
+                        Receive fast updates on stocks and locations, and be able to find the aid you need.
+                    </h3>
             </div>
         
     )
