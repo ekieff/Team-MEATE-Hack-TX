@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import GoogleMapReact from "google-map-react";
 import { db } from "../firebase";
+require("dotenv").config();
 
 //A pantry as it appears on the map. Should probably be an icon+text? Hover functionality would
 //be even better but idk we can pull that off
@@ -70,7 +71,7 @@ const SimpleMap = (props) => {
     // Important! Always set the container height explicitly
     <div style={{ height: "50vh", width: "50%" }}>
       <GoogleMapReact
-        bootstrapURLKeys={{ key: process.env.mapApiKey }}
+        bootstrapURLKeys={{ key: process.env.REACT_APP_MAPAPIKEY }}
         defaultCenter={props.center}
         defaultZoom={10}
         yesIWantToUseGoogleMapApiInternals
